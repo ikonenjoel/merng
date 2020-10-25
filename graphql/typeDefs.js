@@ -11,13 +11,13 @@ module.exports = gql`
       id: ID!
       email: String!
       token: String!
-      userName: String!
+      username: String!
       createdAt: String!
   }
   input RegisterInput {
       username: String!
       password: String!
-      comfirmPassword: String!
+      confirmPassword: String!
       email: String!
   }
   type Query{
