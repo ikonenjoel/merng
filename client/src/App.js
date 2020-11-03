@@ -18,7 +18,7 @@ function App() {
         <MenuBar />
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/login" component={Login}></Route>
-        <Route exact path="/registeer" component={Register}></Route>
+        <Route exact path="/register" component={Register}></Route>
       </Container>
     </Router>
   );
