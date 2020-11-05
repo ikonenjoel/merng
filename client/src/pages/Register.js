@@ -1,39 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button } from 'semantic-ui-react'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 
-export default function Register() {
-  const [errors, setErrors] = useState({
+import { AuthContext } from '../context/auth'
+import { useForm } from '../util/hooks'
 
-  })
-  const [values, setValues] = useState({
+export default function Register(props) {
+  const context = useContext(AuthContext)
+  const [errors, setErrors] = useState({})
+
+  const { onChange, onSubmit, values } = useForm(registerUser, {
     username: '',
     password: '',
     confirmPassword: '',
     email: ''
-  })
-
-  const onChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value});
-  }
+  });
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(proxy, result){
-      console.log(result)
+    update(_, { data: { register: userData }}){
+      context.login(userData)
+      props.history.push('/')
     },
     onError(err){
-      console.log(err.graphQLErrors[0].extensions.exception.errors)
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: values
   });
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  function registerUser(){
     addUser();
-  };
-
+  }
 
   return (
     <div className="form-container">
@@ -44,6 +41,7 @@ export default function Register() {
           name="username"
           type="text"
           value={values.username}
+          error={errors.username ? true : false}
           onChange={onChange} />
         <Form.Input
           label="Email"
@@ -51,6 +49,7 @@ export default function Register() {
           name="email"
           type="email"
           value={values.email}
+          error={errors.email ? true : false}
           onChange={onChange} />
         <Form.Input
           label="Password"
@@ -58,6 +57,7 @@ export default function Register() {
           name="password"
           type="password"
           value={values.password}
+          error={errors.password ? true : false}
           onChange={onChange} />
         <Form.Input
           label="Confirm Password"
@@ -65,6 +65,7 @@ export default function Register() {
           name="confirmPassword"
           type="password"
           value={values.confirmPassword}
+          error={errors.confirmPassword ? true : false}
           onChange={onChange} />
           <Button type="submit" primary>
             Register
