@@ -33,15 +33,15 @@ export default function PostCard({
           <Button color='teal' basic>
             <Icon name='heart' />
           </Button>
-          <Label basic color='teal' pointing='left'>
+          <Label basic color='teal'>
             {likeCount}
           </Label>
         </Button>
         <Button as='div' labelPosition='right' onClick={commentOnPost}>
           <Button color='blue' basic>
-            <Icon name='comments' />
+            <Icon name='comment' />
           </Button>
-          <Label basic color='blue' pointing='left'>
+          <Label basic color='blue'>
             {commentCount}
           </Label>
         </Button>
