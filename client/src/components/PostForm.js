@@ -18,8 +18,7 @@ export default function PostForm() {
       const data = proxy.readQuery({
         query: FETCH_POSTS_QUERY,
       });
-      let newData = [...data.getPosts];
-      newData = [result.data.createPost, ...data.getPosts];
+      const  newData = [result.data.createPost, ...data.getPosts];
       proxy.writeQuery({ 
         query: FETCH_POSTS_QUERY,
         data: {
